@@ -13,42 +13,58 @@
     <!-- <link rel="stylesheet" href="https://daemonite.github.io/material/css/material.min.css"> -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="icon" href="{{ url_for('static', filename='Pukulenam.png') }}" type="image/png">
     <title>Abstractive Summerization</title>
+    <style>
+      body {
+        background-color: #e9ecef;
+      }
+    </style>
   </head>
   <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand" href="#">Pukul Enam</a>
+      <img src="{{ url_for('static', filename='Pukulenam.png') }}" style="width: 30px; margin-right: 5px;">
+      <a class="navbar-brand" href="/">Pukul Enam</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
-          <li class="nav-item active">
-            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+          {% set active_page = 'index' %}
+          <li class="nav-item {{ 'active' if active_page=='index' else ''}}">
+            <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#"> History</a>
+            <a class="nav-link" href="/history"> History</a>
           </li>
         </ul>
       </div>
     </nav>
 
       <div class="jumbotron">
-        <form action="/submit" method="POST">
+        <form action="/" method="POST">
           <div class="row">
             <div class="col-md">
-                <textarea class="form-control textarea-autosize" name="inputNews" id="inputNews" rows="3" placeholder="Try this textarea" style="height: 300px; resize: none"></textarea>
+              <h3>Input News</h3>
+                <textarea class="form-control textarea-autosize" name="inputNews" autofocus="autofocus" id="inputNews" rows="3"  style="height: 300px; resize: none">{{ news_text or ''}}{{ (news and news.inputNews ) or "" }}</textarea>
             </div>
             <div class="col-md">
-              <textarea class="form-control textarea-autosize" name="outputNews" id="outputNews" rows="3" placeholder="Try this textarea" style="height: 300px; resize: none"></textarea>
+              <h3>Summarized News</h3>
+              <textarea class="form-control textarea-autosize"  name="outputNews" id="outputNews" rows="3" placeholder="Summarized" style="height: 300px; resize: none">{{ summarized or ''}}{{ (news and news.inputNews ) or "" }}</textarea>
             </div>
           </div>
+          <br>
+          <div class="row">
+            <div class="col-md">
+              <input type="submit" class="btn btn-primary btn-lg" value="Submit">
 
-
+            </div>
+          </div>
+          
+          <!-- <button type="button" class="btn btn-primary btn-lg"></button> -->
         </form>
         
       </div>
-      
 
     <!-- Optional JavaScript -->
     <script src="{{ url_for('static', filename='jquery.js') }}"> </script>
